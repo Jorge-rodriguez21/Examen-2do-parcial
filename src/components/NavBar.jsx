@@ -10,7 +10,7 @@ const NavBar = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light ">
+        <nav className="navbar navbar-expand-lg bg-light ">
             <div className="container-fluid">
                     <img src="assets/Tics.png" width="5%" height="5%" alt="animacion" />
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

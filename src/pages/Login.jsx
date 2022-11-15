@@ -1,6 +1,6 @@
 import React from 'react'
 
-const LoginScreen = ({ history }) => {
+const Login = ({ history }) => {
 
     const handleLogin = () => {
         history.push("/listaparticipantes")
@@ -24,4 +24,4 @@ const LoginScreen = ({ history }) => {
     )
 }
 
-export default LoginScreen
+export default Login

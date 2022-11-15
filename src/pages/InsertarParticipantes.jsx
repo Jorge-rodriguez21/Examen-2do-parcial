@@ -1,49 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { useLocation,useParams } from "react-router";
+import { useLocation } from "react-router";
+import queryString from "query-string";
+import { Participantes } from "../models/Participantes";
+import Card from "../components/Card.jsx";
 
-const ModificarScreen = ({ history }) => {
 
-    const { id } = useParams();
-console.log(id);
-var local =[];
+const InsertarParticipantes = ({ history }) => {
 
-local = JSON.parse(localStorage.getItem('participantes'));
-// var p;
-const participante = local.filter(el => el != null)
-const p = participante.find((p) => p.id === id)
-// console.log(p);
-
-const [data, setData] = useState({ nombre: p.nombre, apellidos: p.apellidos, email: p.email, twitter: p.twitter });
-  
-    const { nombre, apellidos, email, twitter } = data;
-
-   //Definimos la funcion handleChange //uso el metodo de abajao para agregar los valores
-   const handleChange = (e) => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleClick = () => {
-    //invocamos el dispatch, todos los dispatch van a tener referencia directa con el reducer a ejecutar, debemos pasarle un action
-    if (nombre && apellidos && email && twitter) {
-      
-      p.nombre = data.nombre;
-      p.apellidos = data.apellidos;
-      p.email = data.email;
-      p.twitter = data.twitter;
-      
-      localStorage.setItem("participantes", JSON.stringify(local));
-      setData({ nombre: "", apellidos: "", email: "", twitter: "" });
-      handleLista()
+    var arreglo = []
+    var consulta = JSON.parse(localStorage.getItem('participantes'))
+    if (consulta == null) {
+        arreglo.push(consulta)
     } else {
-      alert('Debes completar todos los campos');
+
+        arreglo = consulta
     }
 
-  };
 
+    const [participantes, setParticipantes] = useState({ nombre: "", apellidos: "", email: "", twitter: "" });
+
+    const { nombre, apellidos, email, twitter } = participantes
+
+    const [checked, setChecked] = React.useState(true);
+
+    // Definimos la función handleChange
+    const handleChange = (e) => {
+        e.preventDefault();
+        setParticipantes({
+            ...participantes,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const actionAdd = {
+        id: uuid(),
+        nombre,
+        apellidos,
+        email,
+        twitter
+    }
+    const handleClick = () => {
+
+        if (nombre && apellidos && email && twitter) {
+            arreglo.push(actionAdd)
+            localStorage.setItem("participantes", JSON.stringify(arreglo))
+            setParticipantes({
+                nombre: "",
+                apellidos: "",
+                email: "",
+                twitter: ""
+            });
+            handleLista()
+        } else {
+            alert('Llena todos los campos, no dejar ninguno vacio');
+        }
+    }
 
     const handleLista = () => {
         history.push("/listaparticipantes")
@@ -51,7 +63,7 @@ const [data, setData] = useState({ nombre: p.nombre, apellidos: p.apellidos, ema
 
     return (
         <div className="container">
-            <h1>Modificar de participante</h1>
+            <h1>Registro de participante</h1>
             <hr />
             <label className="mx-1 d-grid gap-2">
                 Nombre: {" "}
@@ -91,12 +103,13 @@ const [data, setData] = useState({ nombre: p.nombre, apellidos: p.apellidos, ema
                     className="form-control"
                     autoComplete="off" />
             </label>
+            
             <br />
             <div className="justify-content-end">
                 <button onClick={handleClick} className="btn btn-outline-success">Guardar</button>
             </div>
+
         </div>
     );
 };
-
-export default ModificarScreen;
+export default InsertarParticipantes;

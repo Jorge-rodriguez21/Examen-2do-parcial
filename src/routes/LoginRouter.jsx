@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import LoginScreen from '../pages/LoginScreen'
+import Login from '../pages/Login'
 import AppRouter from './AppRouter'
 
 const LoginRouter = () => {
@@ -10,7 +10,7 @@ const LoginRouter = () => {
         <Router>
             <AppRouter></AppRouter>
             <Switch>
-                <Route exact path="/login" component={LoginScreen}/>
+                <Route exact path="/login" component={Login}/>
             </Switch>
         </Router>
     )
